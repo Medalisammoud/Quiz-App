@@ -1,5 +1,6 @@
-import React, { useState, Fragment, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { FirebaseContext } from "../Firebase";
+import Loader from "../Loader";
 
 import Logout from "../Logout";
 import Quiz from "../Quiz";
@@ -34,10 +35,10 @@ const Welcome = (props) => {
     };
   }, [userSession, firebase, props.history]);
   return userSession === null ? (
-    <Fragment>
-      <div className="loader"></div>
-      <p>Loading ...</p>
-    </Fragment>
+    <Loader
+      loadingMsg={"Authentification ..."}
+      styling={{ textAlign: "center", color: "#FFFFFF" }}
+    />
   ) : (
     <div className="quiz-bg">
       <div className="container">
