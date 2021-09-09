@@ -1,35 +1,32 @@
-import React, { useState, useEffect,useContext } from 'react'
-import { FirebaseContext } from '../Firebase'
+import React, { useState, useEffect, useContext } from "react";
+import { FirebaseContext } from "../Firebase";
+import ReactTooltip from "react-tooltip";
 
 const Logout = () => {
+  const firebase = useContext(FirebaseContext);
 
-    const firebase = useContext(FirebaseContext)
+  const [checked, setChecked] = useState(false);
 
-    const [checked, setChecked] = useState(false)
-
-    useEffect(() => {
-        if(checked){
-            console.log('deconnexion')
-            firebase.signoutUser();
-        }
-    }, [checked, firebase])
-
-    const handleChange = (e) =>{
-        setChecked(e.target.checked);
+  useEffect(() => {
+    if (checked) {
+      console.log("deconnexion");
+      firebase.signoutUser();
     }
+  }, [checked, firebase]);
 
-    return (
-        <div className="logoutContainer">
-            <label className="switch">
-                <input
-                    onChange={handleChange}
-                    type="checkbox"
-                    checked={checked} 
-                />
-                <span className="slider round"></span>
-            </label>
-        </div>
-    )
-}
+  const handleChange = (e) => {
+    setChecked(e.target.checked);
+  };
 
-export default Logout
+  return (
+    <div className="logoutContainer">
+      <label className="switch">
+        <input onChange={handleChange} type="checkbox" checked={checked} />
+        <span className="slider round" data-tip="Déconnexion"></span>
+        <ReactTooltip place="left" effect="solid" />
+      </label>
+    </div>
+  );
+};
+
+export default Logout;
