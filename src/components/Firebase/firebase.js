@@ -1,42 +1,39 @@
-import app from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import app from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
 const config = {
-    apiKey: "AIzaSyCaCHN5m5-6vT03Q5JPw2ZdKEzlpH9JNQY",
-    authDomain: "marvel-quiz-c969c.firebaseapp.com",
-    projectId: "marvel-quiz-c969c",
-    storageBucket: "marvel-quiz-c969c.appspot.com",
-    messagingSenderId: "362723214246",
-    appId: "1:362723214246:web:78fd3c31a10f3ac2dc0567"
-  };
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+};
 
 class Firebase {
-    constructor(){
-        app.initializeApp(config);
-        this.auth = app.auth();
-        this.db = app.firestore();
-    }
+  constructor() {
+    app.initializeApp(config);
+    this.auth = app.auth();
+    this.db = app.firestore();
+  }
 
-    // inscription
-    signupUser = (email, password) =>
-        this.auth.createUserWithEmailAndPassword(email, password);
-    
+  // inscription
+  signupUser = (email, password) =>
+    this.auth.createUserWithEmailAndPassword(email, password);
 
-    //Connexion
-    loginUser = (email, password) =>
-        this.auth.signInWithEmailAndPassword(email, password);
+  //Connexion
+  loginUser = (email, password) =>
+    this.auth.signInWithEmailAndPassword(email, password);
 
-    //Déconnexion
-    signoutUser = () =>
-        this.auth.signOut();
+  //Déconnexion
+  signoutUser = () => this.auth.signOut();
 
-    //Récupérer le mot de passe
-    passwordReset = email => this.auth.sendPasswordResetEmail(email);
+  //Récupérer le mot de passe
+  passwordReset = (email) => this.auth.sendPasswordResetEmail(email);
 
-    // firestore
-    user = uid => this.db.doc(`users/${uid}`);
+  // firestore
+  user = (uid) => this.db.doc(`users/${uid}`);
 }
-
 
 export default Firebase;
